@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use common\models\PerformerCategory;
 
 /**
  * User model
@@ -186,4 +187,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    /**
+     * #return ActiveQuery Возаращает категории перформера
+     */
+    public function getPerformerCategory(){
+        return $this->hasMany(PerformerCategory::className(),['id'=>'user_id'])->viaTable('user_to_performer_categories',['performer_category_id'=>'id']);
+    }
+
 }
